@@ -10,8 +10,24 @@ namespace ThomasSatti
             int numberOfCriteria = 0;
             int numberOfGrades = 0;
 
-            Console.WriteLine("Введите кол-во критериев");
-            numberOfCriteria = Convert.ToInt32(Console.ReadLine());
+            var error = true;
+            while (error)
+            {
+                try
+                {
+                    Console.WriteLine("Введите кол-во критериев");
+                    numberOfCriteria = Convert.ToInt32(Console.ReadLine());
+                    error = false;
+                }
+                catch 
+                {
+                    Console.WriteLine("Неверный ввод, нажмите enter и попробуйте снова");
+                    Console.ReadKey();
+                    Console.Clear();
+                    numberOfCriteria = 0;
+                }
+            }
+
 
             for (int i = 1; i < numberOfCriteria; i++)
             {
@@ -26,8 +42,9 @@ namespace ThomasSatti
 
             for (int i = 0; i < numberOfCriteria; i++) //ввод критериев
             {
+                int n = 0;
                 string criteria = "";
-                Console.WriteLine("Введите название " + i + " критерия");
+                Console.WriteLine("Введите название " +( n = i+1 )+ " критерия");
                 criteria = Console.ReadLine();
                 MassiveOfCriteria[i] = criteria;
             }
@@ -36,9 +53,25 @@ namespace ThomasSatti
             {
                 for (int j = i + 1; j < numberOfCriteria; j++)
                 {
-                    Console.WriteLine("Оцените " + MassiveOfCriteria[i] + " по отношению к " + MassiveOfCriteria[j]);
-                    double grade = Convert.ToDouble(Console.ReadLine());
-                    MassiveOfGrades[i, j] = grade;
+                    error = true;
+                    while (error)
+                    {
+                        try
+                        {
+                            Console.WriteLine("Оцените " + MassiveOfCriteria[i] + " по отношению к " + MassiveOfCriteria[j]);
+                            double grade = Convert.ToDouble(Console.ReadLine());
+                            MassiveOfGrades[i, j] = grade;
+                            error = false;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Неверный ввод, нажмите enter и попробуйте снова");
+                            Console.WriteLine("Используйте <,> а не <.> ");
+                            Console.ReadKey();
+                            Console.Clear();
+                            
+                        }
+                    }
                 }
             }
             BuildingTable(numberOfCriteria, MassiveOfCriteria, MassiveOfGrades);
